@@ -1,0 +1,49 @@
+---
+- name: Install sensor
+  gather_facts: true
+  become: true
+  hosts: sensors_app_servers
+
+  tasks:
+    - name: Clone application
+      ansible.builtin.git:
+        repo: 'https://github.com/nuwm-cloud-and-big-data/sensors-app.git'
+        dest: /root/sensor-app
+        clone: yes
+        update: yes
+
+    - name: Apt update
+      apt:
+        update_cache: yes
+
+    - name: Apt upgrade
+      apt: 
+        upgrade: dist
+
+    - name: Install deps
+      apt:  
+        name:
+          - python3-pip
+
+    - name: Install dependency
+      pip: 
+        requirements: /root/sensor-app/data-generator/requirements.txt
+
+    - name: Copy env file
+      ansible.builtin.copy:
+        src: ./.sensor_env
+        dest: /root/sensor-app/data-generator/.env
+    
+    - name: Copy daemon
+      shell: cp /root/sensor-app/data-generator/etc/systemd/system/data-generator.service etc/systemd/system/data-generator.service
+
+    - name: Enable service
+      ansible.builtin.systemd:
+        name: data-generator.service
+        enabled: yes
+
+    - name: Start service
+      ansible.builtin.systemd:
+        daemone_reload: yes
+        state: restarted
+        name: data-generator.service

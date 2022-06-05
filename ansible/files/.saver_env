@@ -1,0 +1,5 @@
+SERVER_PORT=80
+USERNAME=nuwm-bd-student
+PASSWORD=siaeXNBBPTU7oMA3un6rax5dOetnXhdgPl9oLjW0TwfXp5NboXS2UsZE0y7vmUDB0QQeaKEscdPDxxH98ZuBOw==
+CONTACT_POINT=nuwm-bd-student.cassandra.cosmos.azure.com
+DB_PORT=10350
