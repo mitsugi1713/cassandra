@@ -7,7 +7,7 @@
   tasks:
     - name: Clone application
       ansible.builtin.git:
-        repo: 'https://github.com/nuwm-cloud-and-big-data/savers-app.git'
+        repo: 'https://github.com/mitsugi1713/sensor-app.git'
         dest: /root/sensor-app
         clone: yes
         update: yes
